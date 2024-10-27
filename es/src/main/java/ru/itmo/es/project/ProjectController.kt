@@ -6,7 +6,6 @@ import ru.itmo.es.project.events.ProjectCreatedEvent
 import ru.itmo.es.project.events.TaskCreatedEvent
 import java.util.*
 
-@Suppress("CANDIDATE_CHOSEN_USING_OVERLOAD_RESOLUTION_BY_LAMBDA_ANNOTATION")
 @RestController
 @RequestMapping("/projects")
 class ProjectController(
