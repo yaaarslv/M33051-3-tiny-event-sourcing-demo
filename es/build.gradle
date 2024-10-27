@@ -1,11 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.5'
+    id 'org.springframework.boot' version '2.7.7'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'ru.itmo'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
+def tinyEsVersion = '2.7.4'
 
 java {
     toolchain {
@@ -24,8 +25,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "ru.quipy:tiny-event-sourcing-spring-boot-starter:${tinyEsVersion}"
+    implementation "ru.quipy:tiny-postgres-event-store-spring-boot-starter:${tinyEsVersion}"
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
