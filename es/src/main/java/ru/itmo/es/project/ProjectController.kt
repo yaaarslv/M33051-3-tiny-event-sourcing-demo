@@ -1,15 +1,12 @@
-package ru.itmo.es.controller
+package ru.itmo.es.project
 
 import org.springframework.web.bind.annotation.*
-import ru.itmo.es.api.ProjectAggregate
-import ru.itmo.es.api.ProjectCreatedEvent
-import ru.itmo.es.api.TaskCreatedEvent
 import ru.quipy.core.EventSourcingService
-import ru.itmo.es.logic.ProjectAggregateState
-import ru.itmo.es.logic.addTask
-import ru.itmo.es.logic.create
+import ru.itmo.es.project.events.ProjectCreatedEvent
+import ru.itmo.es.project.events.TaskCreatedEvent
 import java.util.*
 
+@Suppress("CANDIDATE_CHOSEN_USING_OVERLOAD_RESOLUTION_BY_LAMBDA_ANNOTATION")
 @RestController
 @RequestMapping("/projects")
 class ProjectController(

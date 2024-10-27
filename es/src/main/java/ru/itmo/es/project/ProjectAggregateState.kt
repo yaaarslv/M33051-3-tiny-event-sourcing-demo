@@ -1,6 +1,9 @@
-package ru.itmo.es.logic
+package ru.itmo.es.project
 
-import ru.itmo.es.api.*
+import ru.itmo.es.project.events.ProjectCreatedEvent
+import ru.itmo.es.project.events.TagAssignedToTaskEvent
+import ru.itmo.es.project.events.TagCreatedEvent
+import ru.itmo.es.project.events.TaskCreatedEvent
 import ru.quipy.core.annotations.StateTransitionFunc
 import ru.quipy.domain.AggregateState
 import java.util.*

@@ -1,9 +1,9 @@
-package ru.itmo.es.logic
+package ru.itmo.es.project
 
-import ru.itmo.es.api.ProjectCreatedEvent
-import ru.itmo.es.api.TagAssignedToTaskEvent
-import ru.itmo.es.api.TagCreatedEvent
-import ru.itmo.es.api.TaskCreatedEvent
+import ru.itmo.es.project.events.ProjectCreatedEvent
+import ru.itmo.es.project.events.TagAssignedToTaskEvent
+import ru.itmo.es.project.events.TagCreatedEvent
+import ru.itmo.es.project.events.TaskCreatedEvent
 import java.util.*
 
 
