@@ -8,7 +8,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/v1/projects/{projectId}/tasks")
-class ProjectController(
+class TaskController(
     private val projectEsService: EventSourcingService<UUID, ProjectAggregate, ProjectAggregateState>
 ) {
     @PostMapping

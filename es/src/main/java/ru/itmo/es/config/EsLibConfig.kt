@@ -4,6 +4,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import ru.itmo.es.customer.CustomerAggregate
+import ru.itmo.es.customer.CustomerAggregateState
 import ru.itmo.es.project.ProjectAggregate
 import ru.itmo.es.project.ProjectAggregateState
 import ru.itmo.es.projections.ProjectEventsSubscriber
@@ -50,11 +52,11 @@ open class EsLibConfig {
     @Autowired
     private lateinit var eventStreamManager: AggregateEventStreamManager
 
-    /**
-     * Use this object to create/update the aggregate
-     */
     @Bean
     open fun projectEsService() = eventSourcingServiceFactory.create<UUID, ProjectAggregate, ProjectAggregateState>()
+
+    @Bean
+    open fun customerEsService() = eventSourcingServiceFactory.create<String, CustomerAggregate, CustomerAggregateState>()
 
     @PostConstruct
     fun init() {
