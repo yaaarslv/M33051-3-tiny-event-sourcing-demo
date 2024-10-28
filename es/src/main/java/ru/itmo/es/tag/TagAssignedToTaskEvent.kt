@@ -1,19 +1,19 @@
-package ru.itmo.es.project.events
+package ru.itmo.es.tag
 
 import ru.itmo.es.project.ProjectAggregate
 import ru.quipy.core.annotations.DomainEvent
 import ru.quipy.domain.Event
 import java.util.*
 
-const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
+const val TAG_ASSIGNED_TO_TASK_EVENT = "TAG_ASSIGNED_TO_TASK_EVENT"
 
-@DomainEvent(name = TASK_CREATED_EVENT)
-class TaskCreatedEvent(
+@DomainEvent(name = TAG_ASSIGNED_TO_TASK_EVENT)
+class TagAssignedToTaskEvent(
     val projectId: UUID,
     val taskId: UUID,
-    val taskName: String,
+    val tagId: UUID,
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
-    name = TASK_CREATED_EVENT,
+    name = TAG_ASSIGNED_TO_TASK_EVENT,
     createdAt = createdAt
 )

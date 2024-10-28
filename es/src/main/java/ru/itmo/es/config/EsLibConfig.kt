@@ -4,10 +4,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.itmo.es.projections.ProjectEventsSubscriber
 import ru.itmo.es.project.ProjectAggregate
-import ru.quipy.core.EventSourcingServiceFactory
 import ru.itmo.es.project.ProjectAggregateState
+import ru.itmo.es.projections.ProjectEventsSubscriber
+import ru.quipy.core.EventSourcingServiceFactory
 import ru.quipy.streams.AggregateEventStreamManager
 import ru.quipy.streams.AggregateSubscriptionsManager
 import java.util.*

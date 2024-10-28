@@ -1,4 +1,4 @@
-package ru.itmo.es.project.events
+package ru.itmo.es.tag
 
 import ru.itmo.es.project.ProjectAggregate
 import ru.quipy.core.annotations.DomainEvent

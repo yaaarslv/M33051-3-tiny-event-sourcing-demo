@@ -1,4 +1,4 @@
-package ru.itmo.es.project;
+package ru.itmo.es.task;
 
 import lombok.Data;
 

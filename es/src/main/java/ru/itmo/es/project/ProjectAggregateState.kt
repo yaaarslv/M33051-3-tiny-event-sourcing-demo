@@ -1,9 +1,8 @@
 package ru.itmo.es.project
 
-import ru.itmo.es.project.events.ProjectCreatedEvent
-import ru.itmo.es.project.events.TagAssignedToTaskEvent
-import ru.itmo.es.project.events.TagCreatedEvent
-import ru.itmo.es.project.events.TaskCreatedEvent
+import ru.itmo.es.tag.TagAssignedToTaskEvent
+import ru.itmo.es.tag.TagCreatedEvent
+import ru.itmo.es.task.TaskCreatedEvent
 import ru.quipy.core.annotations.StateTransitionFunc
 import ru.quipy.domain.AggregateState
 import java.util.*
@@ -11,8 +10,8 @@ import java.util.*
 // Service's business logic
 class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
     private lateinit var projectId: UUID
-    var createdAt: Long = System.currentTimeMillis()
-    var updatedAt: Long = System.currentTimeMillis()
+    private var createdAt: Long = System.currentTimeMillis()
+    private var updatedAt: Long = System.currentTimeMillis()
 
     private lateinit var projectTitle: String
     private lateinit var creatorId: String
@@ -41,6 +40,13 @@ class ProjectAggregateState : AggregateState<UUID, ProjectAggregate> {
         tasks[event.taskId] = TaskEntity(event.taskId, event.taskName, mutableSetOf())
         updatedAt = createdAt
     }
+
+    @StateTransitionFunc
+    fun tagAssignedApply(event: TagAssignedToTaskEvent) {
+        tasks[event.taskId]?.tagsAssigned?.add(event.tagId)
+            ?: throw IllegalArgumentException("No such task: ${event.taskId}")
+        updatedAt = createdAt
+    }
 }
 
 data class TaskEntity(
@@ -53,13 +59,3 @@ data class TagEntity(
     val id: UUID = UUID.randomUUID(),
     val name: String
 )
-
-/**
- * Demonstrates that the transition functions might be representer by "extension" functions, not only class members functions
- */
-@StateTransitionFunc
-fun ProjectAggregateState.tagAssignedApply(event: TagAssignedToTaskEvent) {
-    tasks[event.taskId]?.tagsAssigned?.add(event.tagId)
-        ?: throw IllegalArgumentException("No such task: ${event.taskId}")
-    updatedAt = createdAt
-}

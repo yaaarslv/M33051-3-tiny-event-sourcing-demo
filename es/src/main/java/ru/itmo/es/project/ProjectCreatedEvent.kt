@@ -1,6 +1,5 @@
-package ru.itmo.es.project.events
+package ru.itmo.es.project
 
-import ru.itmo.es.project.ProjectAggregate
 import ru.quipy.core.annotations.DomainEvent
 import ru.quipy.domain.Event
 import java.util.*
