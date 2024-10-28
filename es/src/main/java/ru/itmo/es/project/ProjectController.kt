@@ -1,20 +1,20 @@
 package ru.itmo.es.project
 
 import org.springframework.web.bind.annotation.*
-import ru.quipy.core.EventSourcingService
 import ru.itmo.es.project.events.ProjectCreatedEvent
 import ru.itmo.es.project.events.TaskCreatedEvent
+import ru.quipy.core.EventSourcingService
 import java.util.*
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/v1/projects")
 class ProjectController(
     private val projectEsService: EventSourcingService<UUID, ProjectAggregate, ProjectAggregateState>
 ) {
 
-    @PostMapping("/{projectTitle}")
-    fun createProject(@PathVariable projectTitle: String, @RequestParam creatorId: String): ProjectCreatedEvent {
-        return projectEsService.create { it.create(UUID.randomUUID(), projectTitle, creatorId) }
+    @PostMapping
+    fun createProject(@RequestBody projectDto: ProjectDto): ProjectCreatedEvent {
+        return projectEsService.create { it.create(UUID.randomUUID(), projectDto.title, projectDto.creatorId) }
     }
 
     @GetMapping("/{projectId}")
@@ -22,10 +22,10 @@ class ProjectController(
         return projectEsService.getState(projectId)
     }
 
-    @PostMapping("/{projectId}/tasks/{taskName}")
-    fun createTask(@PathVariable projectId: UUID, @PathVariable taskName: String): TaskCreatedEvent {
+    @PostMapping("/{projectId}/tasks")
+    fun createTask(@PathVariable projectId: UUID, @RequestBody taskDto: TaskDto): TaskCreatedEvent {
         return projectEsService.update(projectId) {
-            it.addTask(taskName)
+            it.addTask(taskDto.title)
         }
     }
 }
