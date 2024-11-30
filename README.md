@@ -5,47 +5,35 @@ using [Tiny Event Sourcing library](https://github.com/andrsuh/tiny-event-sourci
 ### Run PostgresDb
 This example uses Postgresql as an implementation of the Event store. You can see it in `pom.xml`:
 
-```
-<dependency>
-    <groupId>ru.quipy</groupId>
-    <artifactId>tiny-postgres-event-store-spring-boot-starter</artifactId>
-    <version>${tiny.es.version}</version>
-</dependency>
+```groovy
+def tinyEsVersion = '2.7.4'
+
+dependencies {
+    implementation "ru.quipy:tiny-event-sourcing-spring-boot-starter:${tinyEsVersion}"
+    implementation "ru.quipy:tiny-postgres-event-store-spring-boot-starter:${tinyEsVersion}"
+}
 ```
 
 Thus, you have to run Potgresql in order to test this example. We have `docker-compose` file in the root. Run following command to start the database:
 
 ```
-docker-compose up
-```
-
-### Run MongoDb
-You can use MongoDb as an implementation of the Event store. To do it you have to add following lines into your `pom.xml`:
-
-```
-<dependency>
-    <groupId>ru.quipy</groupId>
-    <artifactId>tiny-mongo-event-store-spring-boot-starter</artifactId>
-    <version>${tiny.es.version}</version>
-</dependency>
-```
-§
-Thus, you have to run MongoDb in order to test this example. We have `docker-compose` file in the root. Run following command to start the database:
-
-```
-docker-compose up
+docker-compose up -d
 ```
 
 ### Run the application
-To make the application run you can start the main class `Application.kt`.
+To make the application run you can start the main class `EsApplication`.
 
 ### Test the endpoints
 There are a couple of REST endpoints you can try to call.
 
-To create new Project with name "Project" and creator user "Andrey" call:
+To create new Project with title "Project" and creator user "Andrey" call:
 
 ```
-POST http://localhost:8080/projects/Project?creatorId="Andrey"
+POST http://localhost:8080/projects
+{
+    "title": "Project"
+    "creatorId": "Andrey"
+}
 ```
 
 As a response you will receive the corresponding event if everything went well:
@@ -63,10 +51,13 @@ As a response you will receive the corresponding event if everything went well:
 ```
 
 
-Now lets add some Task with name "Task" to the project. Take the projectId from previous response and perform:
+Now let's add some Task with title "Task" to the project. Take the projectId from previous response and perform:
 
 ```
-POST http://localhost:8081/projects/823d4576-5e95-4027-bd9e-63b27086256c/tasks/Task 
+POST http://localhost:8080/projects/823d4576-5e95-4027-bd9e-63b27086256c/tasks
+{
+    "title": "Task"
+}
 ```
 
 You will receive corresponding `TASK_CREATED_EVENT` if everything ok
@@ -74,7 +65,7 @@ You will receive corresponding `TASK_CREATED_EVENT` if everything ok
 Now lets fetch the current state of the ProjectAggregate:
 
 ```
-GET http://localhost:8081/projects/823d4576-5e95-4027-bd9e-63b27086256c
+GET http://localhost:8080/projects/823d4576-5e95-4027-bd9e-63b27086256c
 ```
 
 You will receive something like this:
@@ -96,4 +87,4 @@ You will receive something like this:
     "id": "823d4576-5e95-4027-bd9e-63b27086256c"
 }
 ```
- This is the project with the only task inside.
+This is the project with the only task inside.
