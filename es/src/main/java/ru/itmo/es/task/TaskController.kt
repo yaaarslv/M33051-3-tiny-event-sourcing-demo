@@ -17,4 +17,9 @@ class TaskController(
             it.addTask(taskDto.title)
         }
     }
+
+    @PutMapping("/{taskId}/{tagId}")
+    fun assignTag(@PathVariable projectId: String, @PathVariable tagId: String, @PathVariable taskId: String) {
+
+    }
 }
